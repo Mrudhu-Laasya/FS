@@ -1,4 +1,5 @@
 import "./index.css";
+import profilePic from "./assets/linkedin_pro_pic.jpeg";
 import { useState } from "react";
 import html2pdf from "html2pdf.js";
 import AboutMe from "./sections/AboutMe";
@@ -72,7 +73,7 @@ function App() {
       <header className="resume-header">
         <div>
           <img
-            src="src/assets/linkedin_pro_pic.jpeg"
+            src={profilePic}
             alt="profile picture"
             height="150"
             width="150"
