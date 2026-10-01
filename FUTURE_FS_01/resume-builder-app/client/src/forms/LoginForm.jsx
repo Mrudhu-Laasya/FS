@@ -19,6 +19,7 @@ export default function LoginForm({ onUpdate }) {
       setIsEditValid(true);
       onUpdate();
     } catch (error) {
+    alert("Username or password invalid");
       console.error(error.message);
     }
   };
@@ -33,6 +34,7 @@ export default function LoginForm({ onUpdate }) {
       // Switch back to login
       setIsSignup(false);
     } catch (error) {
+alert(error.message);
       console.error(error.message);
     }
   };
