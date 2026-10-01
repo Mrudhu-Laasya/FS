@@ -5,6 +5,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.status(200).json({
+    message: "Resume Builder API is running",
+  });
+});
+
 const aboutMeRoutes = require("./routes/aboutMeRoutes");
 const achievementRoutes = require("./routes/achievementRoutes");
 const authRoutes = require("./routes/authRoutes");
