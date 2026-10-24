@@ -76,8 +76,7 @@ Logout / Refresh
     ↓
 Admin Resume Restored
 ```
-To view the project check: https://fs-c6kx.vercel.app/
-
+To view the project check: https://mrudhulaasyaportfolio.vercel.app/
 ## 🚀 Getting Started
 
 ```bash
