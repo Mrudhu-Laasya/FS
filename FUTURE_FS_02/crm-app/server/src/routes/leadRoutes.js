@@ -1,4 +1,3 @@
-
 const express = require("express");
 const router = express.Router();
 
@@ -45,7 +44,5 @@ router.get("/:id/notes", protect, getLeadNotes);
 router.get("/:id/notes/:noteId", protect, getNoteById);
 router.put("/:id/notes/:noteId", protect, updateNote);
 router.delete("/:id/notes/:noteId", protect, deleteNote);
-
-
 
 module.exports = router;

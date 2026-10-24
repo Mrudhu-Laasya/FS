@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import DashboardHeader from "../components/DashboardHeader";
 import Sidebar from "../components/Sidebar";
@@ -22,16 +22,13 @@ const LeadDetails = () => {
 
   const token = localStorage.getItem("token");
 
-  const fetchLead = async () => {
+  const fetchLead = useCallback(async () => {
     try {
-      const response = await fetch(
-        `${API_URL}/api/leads/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetch(`${API_URL}/api/leads/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       const data = await response.json();
 
@@ -43,47 +40,42 @@ const LeadDetails = () => {
     } catch (error) {
       setError(error.message);
     }
-  };
+  }, [id, token]);
 
-  const fetchActivities = async () => {
+  const fetchActivities = useCallback(async () => {
     try {
-      const response = await fetch(
-        `${API_URL}/api/activities/lead/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetch(`${API_URL}/api/activities/lead/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(
-          data.message || "Failed to fetch activities"
-        );
+        throw new Error(data.message || "Failed to fetch activities");
       }
 
       setActivities(data);
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [id, token]);
 
-  const loadLeadData = async () => {
+  const loadLeadData = useCallback(async () => {
     setLoading(true);
 
-    await Promise.all([
-      fetchLead(),
-      fetchActivities(),
-    ]);
+    await Promise.all([fetchLead(), fetchActivities()]);
 
     setLoading(false);
-  };
+  }, [fetchLead, fetchActivities]);
 
   useEffect(() => {
-    loadLeadData();
-  }, [id]);
+    const fetchData = async () => {
+      await loadLeadData();
+    };
+    fetchData();
+  }, [loadLeadData]);
 
   // -------------------------
   // CHANGE STATUS
@@ -91,26 +83,21 @@ const LeadDetails = () => {
 
   const handleStatusChange = async (newStatus) => {
     try {
-      const response = await fetch(
-        `${API_URL}/api/leads/${id}/status`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            status: newStatus,
-          }),
-        }
-      );
+      const response = await fetch(`${API_URL}/api/leads/${id}/status`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          status: newStatus,
+        }),
+      });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(
-          data.message || "Failed to update status"
-        );
+        throw new Error(data.message || "Failed to update status");
       }
 
       setLead(data.lead);
@@ -132,34 +119,26 @@ const LeadDetails = () => {
     }
 
     try {
-      const response = await fetch(
-        `${API_URL}/api/leads/${id}/notes`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            text: noteText,
-          }),
-        }
-      );
+      const response = await fetch(`${API_URL}/api/leads/${id}/notes`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          text: noteText,
+        }),
+      });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(
-          data.message || "Failed to add note"
-        );
+        throw new Error(data.message || "Failed to add note");
       }
 
       setLead((previousLead) => ({
         ...previousLead,
-        notes: [
-          ...previousLead.notes,
-          data.note,
-        ],
+        notes: [...previousLead.notes, data.note],
       }));
 
       setNoteText("");
@@ -191,23 +170,19 @@ const LeadDetails = () => {
           body: JSON.stringify({
             text: editingText,
           }),
-        }
+        },
       );
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(
-          data.message || "Failed to update note"
-        );
+        throw new Error(data.message || "Failed to update note");
       }
 
       setLead((previousLead) => ({
         ...previousLead,
         notes: previousLead.notes.map((note) =>
-          note._id === noteId
-            ? data.note
-            : note
+          note._id === noteId ? data.note : note,
         ),
       }));
 
@@ -224,7 +199,7 @@ const LeadDetails = () => {
 
   const handleDeleteNote = async (noteId) => {
     const confirmed = window.confirm(
-      "Are you sure you want to delete this note?"
+      "Are you sure you want to delete this note?",
     );
 
     if (!confirmed) {
@@ -239,22 +214,18 @@ const LeadDetails = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(
-          data.message || "Failed to delete note"
-        );
+        throw new Error(data.message || "Failed to delete note");
       }
 
       setLead((previousLead) => ({
         ...previousLead,
-        notes: previousLead.notes.filter(
-          (note) => note._id !== noteId
-        ),
+        notes: previousLead.notes.filter((note) => note._id !== noteId),
       }));
     } catch (error) {
       setError(error.message);
@@ -270,9 +241,7 @@ const LeadDetails = () => {
           <Sidebar />
 
           <main className="dashboard-main">
-            <div className="lead-details-message">
-              Loading lead...
-            </div>
+            <div className="lead-details-message">Loading lead...</div>
           </main>
         </div>
       </div>
@@ -288,9 +257,7 @@ const LeadDetails = () => {
           <Sidebar />
 
           <main className="dashboard-main">
-            <div className="lead-details-message error">
-              {error}
-            </div>
+            <div className="lead-details-message error">{error}</div>
           </main>
         </div>
       </div>
@@ -305,14 +272,10 @@ const LeadDetails = () => {
         <Sidebar />
 
         <main className="dashboard-main lead-details-page">
-
           {/* Header */}
           <div className="lead-details-header">
             <div>
-              <button
-                className="back-button"
-                onClick={() => navigate(-1)}
-              >
+              <button className="back-button" onClick={() => navigate(-1)}>
                 ← Back
               </button>
 
@@ -320,48 +283,32 @@ const LeadDetails = () => {
 
               <p>
                 {lead.email}
-                {lead.company &&
-                  ` · ${lead.company}`}
+                {lead.company && ` · ${lead.company}`}
               </p>
             </div>
 
             <select
               value={lead.status}
-              onChange={(e) =>
-                handleStatusChange(e.target.value)
-              }
+              onChange={(e) => handleStatusChange(e.target.value)}
               className={`status-select ${lead.status}`}
             >
               <option value="new">New</option>
-              <option value="contacted">
-                Contacted
-              </option>
-              <option value="converted">
-                Converted
-              </option>
-              <option value="lost">
-                Lost
-              </option>
+              <option value="contacted">Contacted</option>
+              <option value="converted">Converted</option>
+              <option value="lost">Lost</option>
             </select>
           </div>
 
-          {error && (
-            <div className="error-banner">
-              {error}
-            </div>
-          )}
+          {error && <div className="error-banner">{error}</div>}
 
           <div className="lead-details-grid">
-
             {/* LEFT */}
             <div>
-
               {/* Lead Information */}
               <section className="details-card">
                 <h2>Lead Information</h2>
 
                 <div className="details-list">
-
                   <div>
                     <span>Email</span>
                     <strong>{lead.email}</strong>
@@ -369,16 +316,12 @@ const LeadDetails = () => {
 
                   <div>
                     <span>Phone</span>
-                    <strong>
-                      {lead.phone || "Not provided"}
-                    </strong>
+                    <strong>{lead.phone || "Not provided"}</strong>
                   </div>
 
                   <div>
                     <span>Company</span>
-                    <strong>
-                      {lead.company || "Not provided"}
-                    </strong>
+                    <strong>{lead.company || "Not provided"}</strong>
                   </div>
 
                   <div>
@@ -394,12 +337,9 @@ const LeadDetails = () => {
                   <div>
                     <span>Created</span>
                     <strong>
-                      {new Date(
-                        lead.createdAt
-                      ).toLocaleDateString()}
+                      {new Date(lead.createdAt).toLocaleDateString()}
                     </strong>
                   </div>
-
                 </div>
 
                 <div className="message-section">
@@ -417,53 +357,33 @@ const LeadDetails = () => {
                   <textarea
                     placeholder="Write a note about this lead..."
                     value={noteText}
-                    onChange={(e) =>
-                      setNoteText(e.target.value)
-                    }
+                    onChange={(e) => setNoteText(e.target.value)}
                   />
 
-                  <button
-                    onClick={handleAddNote}
-                    disabled={!noteText.trim()}
-                  >
+                  <button onClick={handleAddNote} disabled={!noteText.trim()}>
                     Add Note
                   </button>
                 </div>
 
                 <div className="notes-list">
-
                   {lead.notes.length === 0 ? (
-                    <p className="empty-text">
-                      No notes yet.
-                    </p>
+                    <p className="empty-text">No notes yet.</p>
                   ) : (
                     lead.notes
                       .slice()
                       .reverse()
                       .map((note) => (
-                        <div
-                          className="note-item"
-                          key={note._id}
-                        >
-                          {editingNoteId ===
-                          note._id ? (
+                        <div className="note-item" key={note._id}>
+                          {editingNoteId === note._id ? (
                             <div>
                               <textarea
                                 value={editingText}
-                                onChange={(e) =>
-                                  setEditingText(
-                                    e.target.value
-                                  )
-                                }
+                                onChange={(e) => setEditingText(e.target.value)}
                               />
 
                               <div className="note-actions">
                                 <button
-                                  onClick={() =>
-                                    handleEditNote(
-                                      note._id
-                                    )
-                                  }
+                                  onClick={() => handleEditNote(note._id)}
                                 >
                                   Save
                                 </button>
@@ -471,9 +391,7 @@ const LeadDetails = () => {
                                 <button
                                   className="cancel-button"
                                   onClick={() => {
-                                    setEditingNoteId(
-                                      null
-                                    );
+                                    setEditingNoteId(null);
                                     setEditingText("");
                                   }}
                                 >
@@ -487,20 +405,14 @@ const LeadDetails = () => {
 
                               <div className="note-footer">
                                 <span>
-                                  {new Date(
-                                    note.createdAt
-                                  ).toLocaleString()}
+                                  {new Date(note.createdAt).toLocaleString()}
                                 </span>
 
                                 <div>
                                   <button
                                     onClick={() => {
-                                      setEditingNoteId(
-                                        note._id
-                                      );
-                                      setEditingText(
-                                        note.text
-                                      );
+                                      setEditingNoteId(note._id);
+                                      setEditingText(note.text);
                                     }}
                                   >
                                     Edit
@@ -508,11 +420,7 @@ const LeadDetails = () => {
 
                                   <button
                                     className="delete-button"
-                                    onClick={() =>
-                                      handleDeleteNote(
-                                        note._id
-                                      )
-                                    }
+                                    onClick={() => handleDeleteNote(note._id)}
                                   >
                                     Delete
                                   </button>
@@ -523,7 +431,6 @@ const LeadDetails = () => {
                         </div>
                       ))
                   )}
-
                 </div>
               </section>
             </div>
@@ -533,37 +440,25 @@ const LeadDetails = () => {
               <h2>Activity</h2>
 
               {activities.length === 0 ? (
-                <p className="empty-text">
-                  No activity yet.
-                </p>
+                <p className="empty-text">No activity yet.</p>
               ) : (
                 <div className="activity-list">
-
                   {activities.map((activity) => (
-                    <div
-                      className="activity-item"
-                      key={activity._id}
-                    >
+                    <div className="activity-item" key={activity._id}>
                       <div className="activity-dot" />
 
                       <div>
-                        <strong>
-                          {activity.description}
-                        </strong>
+                        <strong>{activity.description}</strong>
 
                         <span>
-                          {new Date(
-                            activity.createdAt
-                          ).toLocaleString()}
+                          {new Date(activity.createdAt).toLocaleString()}
                         </span>
                       </div>
                     </div>
                   ))}
-
                 </div>
               )}
             </section>
-
           </div>
         </main>
       </div>

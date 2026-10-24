@@ -21,7 +21,7 @@
   border-bottom: 1px solid #e8edf3;
 }
 
-main{
+main {
   flex: 1;
   min-width: 0;
   width: 0;
@@ -104,7 +104,7 @@ main{
   color: #2563eb;
 }
 
-.contact-intro>p {
+.contact-intro > p {
   margin-top: 22px;
   max-width: 450px;
   color: #64748b;
@@ -212,7 +212,9 @@ main{
   font-size: 14px;
   font-family: inherit;
   outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
 }
 
 .form-group input::placeholder,
@@ -249,7 +251,9 @@ main{
   align-items: center;
   justify-content: center;
   gap: 9px;
-  transition: background 0.2s, transform 0.2s;
+  transition:
+    background 0.2s,
+    transform 0.2s;
 }
 
 .submit-button:hover {
@@ -409,7 +413,9 @@ main{
   color: #172033;
   font-size: 14px;
   font-family: inherit;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
 }
 
 .login-form-group input::placeholder {
@@ -473,7 +479,9 @@ main{
   align-items: center;
   justify-content: center;
   gap: 8px;
-  transition: background 0.2s, transform 0.2s;
+  transition:
+    background 0.2s,
+    transform 0.2s;
 }
 
 .login-button:hover {
@@ -1141,7 +1149,6 @@ main{
   }
 }
 
-
 .activity-page {
   padding: 28px;
   min-height: 100%;
@@ -1219,8 +1226,6 @@ main{
   overflow: hidden;
 }
 
-
-
 .activity-item {
   display: flex;
   align-items: flex-start;
@@ -1232,7 +1237,6 @@ main{
 .activity-item:last-child {
   border-bottom: none;
 }
-
 
 .activity-icon {
   display: flex;
@@ -1247,7 +1251,6 @@ main{
   line-height: 1;
   text-align: center;
 }
-
 
 .activity-content {
   display: flex;
@@ -1394,7 +1397,6 @@ main{
   cursor: pointer;
 }
 
-
 @media (max-width: 600px) {
   .activity-item {
     padding: 12px;
@@ -1429,7 +1431,6 @@ main{
     width: 100%;
   }
 }
-
 
 /* ===== Lead Details Page ===== */
 
@@ -1663,7 +1664,9 @@ main{
   font-size: 13px;
   line-height: 1.7;
   outline: none;
-  transition: border-color 0.15s, box-shadow 0.15s;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
 }
 
 .note-input textarea::placeholder {
@@ -1708,7 +1711,9 @@ main{
   background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 12px;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .note-item:hover {
@@ -1761,8 +1766,10 @@ main{
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease,
-              border-color 0.2s ease;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .note-footer button:hover {
@@ -1956,7 +1963,6 @@ main{
   }
 }
 
-
 /* Follow-ups page */
 .followups-page {
   padding: 28px;
@@ -2001,7 +2007,9 @@ main{
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .followups-refresh:hover {
@@ -2034,7 +2042,9 @@ main{
   border: 1px solid #e2e8f0;
   border-radius: 12px;
   cursor: pointer;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease,
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
     transform 0.2s ease;
 }
 
@@ -2225,7 +2235,9 @@ main{
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .followup-btn.primary {
@@ -2432,7 +2444,9 @@ main{
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.2s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
 }
 
 .followups-schedule-btn:hover {
@@ -2525,7 +2539,9 @@ main{
   color: #0f172a;
   font: inherit;
   font-size: 13px;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .followup-field select {
@@ -2602,8 +2618,6 @@ main{
     width: 100%;
   }
 }
-
-
 
 .leadflow-dashboard {
   min-width: 0;
@@ -3140,7 +3154,10 @@ main{
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    border-color 0.2s;
 }
 
 .period-button:hover {

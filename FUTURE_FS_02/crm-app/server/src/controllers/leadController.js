@@ -1,4 +1,3 @@
-
 const Lead = require("../models/Lead");
 const Activity = require("../models/Activity");
 
@@ -120,7 +119,7 @@ const updateLead = async (req, res) => {
     const lead = await Lead.findByIdAndUpdate(
       req.params.id,
       { $set: updates },
-      { new: true, runValidators: true }
+      { new: true, runValidators: true },
     );
 
     if (!lead) {
@@ -239,7 +238,7 @@ const getLeadNotes = async (req, res) => {
   try {
     const lead = await Lead.findById(req.params.id).populate(
       "notes.createdBy",
-      "name email"
+      "name email",
     );
 
     if (!lead) {
@@ -331,7 +330,6 @@ const deleteNote = async (req, res) => {
   }
 };
 
-
 // Get all new leads
 const getNewLeads = async (req, res) => {
   try {
@@ -391,7 +389,6 @@ const getLostLeads = async (req, res) => {
     });
   }
 };
-
 
 module.exports = {
   createLead,

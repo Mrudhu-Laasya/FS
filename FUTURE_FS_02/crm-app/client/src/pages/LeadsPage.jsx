@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import DashboardHeader from "../components/DashboardHeader";
 import Sidebar from "../components/Sidebar";
@@ -16,7 +16,7 @@ const LeadsPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const fetchLeads = async () => {
+  const fetchLeads = useCallback(async () => {
     try {
       setLoading(true);
       setError("");
@@ -43,7 +43,7 @@ const LeadsPage = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       const data = await response.json();
@@ -58,11 +58,14 @@ const LeadsPage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [search, sort, status]);
 
   useEffect(() => {
-    fetchLeads();
-  }, [status, sort]);
+    const fetchData = async () => {
+      await fetchLeads();
+    };
+    fetchData();
+  }, [fetchLeads]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -70,7 +73,7 @@ const LeadsPage = () => {
     }, 400);
 
     return () => clearTimeout(timer);
-  }, [search]);
+  }, [fetchLeads]);
 
   const getStatusClass = (status) => {
     return `lead-status ${status}`;
@@ -104,10 +107,7 @@ const LeadsPage = () => {
               />
             </div>
 
-            <select
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
-            >
+            <select value={status} onChange={(e) => setStatus(e.target.value)}>
               <option value="">All Statuses</option>
               <option value="new">New</option>
               <option value="contacted">Contacted</option>
@@ -115,10 +115,7 @@ const LeadsPage = () => {
               <option value="lost">Lost</option>
             </select>
 
-            <select
-              value={sort}
-              onChange={(e) => setSort(e.target.value)}
-            >
+            <select value={sort} onChange={(e) => setSort(e.target.value)}>
               <option value="newest">Newest</option>
               <option value="oldest">Oldest</option>
               <option value="name">Name A-Z</option>
@@ -129,17 +126,11 @@ const LeadsPage = () => {
           {/* Leads table */}
           <div className="leads-card">
             {loading ? (
-              <div className="leads-message">
-                Loading leads...
-              </div>
+              <div className="leads-message">Loading leads...</div>
             ) : error ? (
-              <div className="leads-message error">
-                {error}
-              </div>
+              <div className="leads-message error">{error}</div>
             ) : leads.length === 0 ? (
-              <div className="leads-message">
-                No leads found.
-              </div>
+              <div className="leads-message">No leads found.</div>
             ) : (
               <table className="leads-table">
                 <thead>
@@ -165,13 +156,9 @@ const LeadsPage = () => {
                         </div>
                       </td>
 
-                      <td>
-                        {lead.company || "—"}
-                      </td>
+                      <td>{lead.company || "—"}</td>
 
-                      <td>
-                        {lead.service}
-                      </td>
+                      <td>{lead.service}</td>
 
                       <td>
                         <span className={getStatusClass(lead.status)}>
@@ -179,9 +166,7 @@ const LeadsPage = () => {
                         </span>
                       </td>
 
-                      <td>
-                        {new Date(lead.createdAt).toLocaleDateString()}
-                      </td>
+                      <td>{new Date(lead.createdAt).toLocaleDateString()}</td>
                     </tr>
                   ))}
                 </tbody>

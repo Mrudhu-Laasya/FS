@@ -8,7 +8,7 @@ const {
   rescheduleFollowup,
 } = require("../controllers/followUpController");
 
-const {protect} = require("../middleware/authMiddleware");
+const { protect } = require("../middleware/authMiddleware");
 
 // Get follow-ups grouped by category
 router.get("/", protect, getFollowups);

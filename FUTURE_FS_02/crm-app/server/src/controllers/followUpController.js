@@ -1,4 +1,3 @@
-
 const FollowUp = require("../models/FollowUp");
 const Lead = require("../models/Lead");
 const Activity = require("../models/Activity");
@@ -113,31 +112,23 @@ const getFollowups = async (req, res) => {
       .populate("createdBy", "name email")
       .sort({ followUpDate: 1 });
 
-    const pending = followUps.filter(
-      (item) => item.status === "pending"
-    );
+    const pending = followUps.filter((item) => item.status === "pending");
 
-    const overdue = pending.filter(
-      (item) => item.followUpDate < startOfToday
-    );
+    const overdue = pending.filter((item) => item.followUpDate < startOfToday);
 
     const dueToday = pending.filter(
       (item) =>
         item.followUpDate >= startOfToday &&
-        item.followUpDate < startOfTomorrow
+        item.followUpDate < startOfTomorrow,
     );
 
     const upcoming = pending.filter(
-      (item) => item.followUpDate >= startOfTomorrow
+      (item) => item.followUpDate >= startOfTomorrow,
     );
 
-    const completed = followUps.filter(
-      (item) => item.status === "completed"
-    );
+    const completed = followUps.filter((item) => item.status === "completed");
 
-    const cancelled = followUps.filter(
-      (item) => item.status === "cancelled"
-    );
+    const cancelled = followUps.filter((item) => item.status === "cancelled");
 
     return res.status(200).json({
       counts: {
@@ -159,7 +150,6 @@ const getFollowups = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
-
 
 const rescheduleFollowup = async (req, res) => {
   try {
@@ -215,7 +205,6 @@ const rescheduleFollowup = async (req, res) => {
     });
   }
 };
-
 
 module.exports = {
   createFollowup,

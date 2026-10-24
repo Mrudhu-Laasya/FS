@@ -40,7 +40,7 @@ const activitySchema = new mongoose.Schema(
       enum: ["new", "contacted", "converted", "lost"],
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-module.exports = mongoose.model("Activity", activitySchema,"activity");
+module.exports = mongoose.model("Activity", activitySchema, "activity");

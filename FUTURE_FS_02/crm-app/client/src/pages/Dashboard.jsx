@@ -1,4 +1,3 @@
-
 import { useCallback, useEffect, useState } from "react";
 import {
   ResponsiveContainer,
@@ -37,9 +36,7 @@ const formatDate = (date) =>
 
 const formatLabel = (value) =>
   value
-    ? value
-      .replace(/_/g, " ")
-      .replace(/\b\w/g, (char) => char.toUpperCase())
+    ? value.replace(/_/g, " ").replace(/\b\w/g, (char) => char.toUpperCase())
     : "Activity";
 
 const Dashboard = () => {
@@ -99,16 +96,19 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (period !== "custom" || (startDate && endDate)) {
-      loadDashboard();
+      const fetchData = async () => {
+        await loadDashboard();
+      };
+      fetchData();
     }
   }, [loadDashboard, period, startDate, endDate]);
 
   const leadStatusData = summary?.leads?.byStatus
     ? Object.entries(summary.leads.byStatus).map(([name, value]) => ({
-      name: formatLabel(name),
-      value,
-      key: name,
-    }))
+        name: formatLabel(name),
+        value,
+        key: name,
+      }))
     : [];
 
   const chartData = (summary?.charts?.daily || []).map((item) => ({
@@ -119,8 +119,7 @@ const Dashboard = () => {
     }),
   }));
 
-  const remindersCount =
-    followUps.overdue.length + followUps.dueToday.length;
+  const remindersCount = followUps.overdue.length + followUps.dueToday.length;
 
   const reminderGroups = [
     {
@@ -143,7 +142,6 @@ const Dashboard = () => {
     },
   ];
 
-
   return (
     <div className="dashboard">
       <DashboardHeader />
@@ -162,9 +160,7 @@ const Dashboard = () => {
               <span aria-hidden="true">♧</span>
               Reminders
               {remindersCount > 0 && (
-                <span className="notification-count">
-                  {remindersCount}
-                </span>
+                <span className="notification-count">{remindersCount}</span>
               )}
             </a>
           </div>
@@ -183,8 +179,9 @@ const Dashboard = () => {
                   <button
                     key={option.value}
                     type="button"
-                    className={`period-button ${period === option.value ? "active" : ""
-                      }`}
+                    className={`period-button ${
+                      period === option.value ? "active" : ""
+                    }`}
                     onClick={() => setPeriod(option.value)}
                   >
                     {option.label}
@@ -235,7 +232,6 @@ const Dashboard = () => {
               </p>
             )}
           </section>
-
 
           {error && (
             <div className="dashboard-error" role="alert">
@@ -380,9 +376,7 @@ const Dashboard = () => {
                       </LineChart>
                     </ResponsiveContainer>
                   ) : (
-                    <div className="chart-empty">
-                      No trend data available.
-                    </div>
+                    <div className="chart-empty">No trend data available.</div>
                   )}
                 </article>
               </section>
@@ -393,7 +387,10 @@ const Dashboard = () => {
                     <h2>Follow-up reminders</h2>
                     <p>Pending tasks based on today's date</p>
                   </div>
-                  <button onClick={() => navigate("/follow-ups")} className="text-link">
+                  <button
+                    onClick={() => navigate("/follow-ups")}
+                    className="text-link"
+                  >
                     Manage follow-ups →
                   </button>
                 </div>
@@ -437,7 +434,10 @@ const Dashboard = () => {
                       )}
 
                       {group.items.length > 4 && (
-                        <button onClick={() => navigate("/follow-ups")} className="text-link">
+                        <button
+                          onClick={() => navigate("/follow-ups")}
+                          className="text-link"
+                        >
                           Manage follow-ups →
                         </button>
                       )}

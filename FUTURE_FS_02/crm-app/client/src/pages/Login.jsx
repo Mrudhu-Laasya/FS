@@ -20,30 +20,30 @@ function Login() {
     });
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setError("");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
 
-  try {
-    const data = await login(formData.email, formData.password);
-    
-    if (data.token) {
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("admin", JSON.stringify(data.admin));
-      navigate("/dashboard");
-    } else {
-      setError(data.message || "Login failed");
+    try {
+      const data = await login(formData.email, formData.password);
+
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("admin", JSON.stringify(data.admin));
+        navigate("/dashboard");
+      } else {
+        setError(data.message || "Login failed");
+      }
+    } catch (err) {
+      setError(
+        `An error occurred.${err.message ? ` ${err.message}` : ""} Please try again.`,
+      );
     }
-  } catch (err) {
-    setError("An error occurred. Please try again.");
-  }
-};
+  };
 
   return (
     <div className="login-page">
-
       <div className="login-card">
-
         <div className="login-brand">
           <div className="login-logo">L</div>
           <span>LeadFlow</span>
@@ -55,11 +55,8 @@ const handleSubmit = async (e) => {
         </div>
 
         <form onSubmit={handleSubmit} className="login-form">
-
           <div className="login-form-group">
-            <label htmlFor="email">
-              Email address
-            </label>
+            <label htmlFor="email">Email address</label>
 
             <input
               id="email"
@@ -74,14 +71,9 @@ const handleSubmit = async (e) => {
 
           <div className="login-form-group">
             <div className="password-label">
-              <label htmlFor="password">
-                Password
-              </label>
+              <label htmlFor="password">Password</label>
 
-              <button
-                type="button"
-                className="forgot-password"
-              >
+              <button type="button" className="forgot-password">
                 Forgot password?
               </button>
             </div>
@@ -97,34 +89,21 @@ const handleSubmit = async (e) => {
             />
           </div>
 
-          {error && (
-            <p className="login-error">
-              {error}
-            </p>
-          )}
+          {error && <p className="login-error">{error}</p>}
 
-          <button
-            type="submit"
-            className="login-button"
-          >
+          <button type="submit" className="login-button">
             Sign In
             <span>→</span>
           </button>
-
         </form>
 
         <div className="login-footer">
           <span>Not an admin?</span>
-          <Link to="/contact">
-            Back to Contact Page
-          </Link>
+          <Link to="/contact">Back to Contact Page</Link>
         </div>
-
       </div>
-
     </div>
   );
 }
 
 export default Login;
-

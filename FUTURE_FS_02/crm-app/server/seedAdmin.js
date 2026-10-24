@@ -9,7 +9,7 @@ const seedAdmin = async () => {
     console.log("Connected to MongoDB");
 
     const passwordHash = await bcrypt.hash("admin123", 12);
-    
+
     const admin = await Admin.create({
       name: "Admin",
       email: "admin@example.com",

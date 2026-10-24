@@ -1,4 +1,3 @@
-
 const mongoose = require("mongoose");
 
 const noteSchema = new mongoose.Schema(
@@ -17,7 +16,7 @@ const noteSchema = new mongoose.Schema(
       ref: "Admin",
     },
   },
-  { _id: true }
+  { _id: true },
 );
 
 const leadSchema = new mongoose.Schema(
@@ -74,7 +73,7 @@ const leadSchema = new mongoose.Schema(
       default: null,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-module.exports = mongoose.model("Lead", leadSchema,"leads");
+module.exports = mongoose.model("Lead", leadSchema, "leads");

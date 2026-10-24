@@ -14,16 +14,12 @@ const Sidebar = () => {
 
   return (
     <aside className="sidebar">
-
       <div className="sidebar-content">
-
         <div className="sidebar-section">
           <p className="sidebar-section-title">Overview</p>
 
           <button
-            className={`sidebar-item ${
-              isActive("/dashboard") ? "active" : ""
-            }`}
+            className={`sidebar-item ${isActive("/dashboard") ? "active" : ""}`}
             onClick={() => navigate("/dashboard")}
           >
             <span className="sidebar-icon">⌂</span>
@@ -35,9 +31,7 @@ const Sidebar = () => {
           <p className="sidebar-section-title">Leads</p>
 
           <button
-            className={`sidebar-item ${
-              isActive("/leads") ? "active" : ""
-            }`}
+            className={`sidebar-item ${isActive("/leads") ? "active" : ""}`}
             onClick={() => navigate("/leads")}
           >
             <span className="sidebar-icon">≡</span>
@@ -45,9 +39,7 @@ const Sidebar = () => {
           </button>
 
           <button
-            className={`sidebar-item ${
-              isActive("/leads/new") ? "active" : ""
-            }`}
+            className={`sidebar-item ${isActive("/leads/new") ? "active" : ""}`}
             onClick={() => navigate("/leads/new")}
           >
             <span className="sidebar-icon">●</span>
@@ -89,9 +81,7 @@ const Sidebar = () => {
           <p className="sidebar-section-title">Activity</p>
 
           <button
-            className={`sidebar-item ${
-              isActive("/activity") ? "active" : ""
-            }`}
+            className={`sidebar-item ${isActive("/activity") ? "active" : ""}`}
             onClick={() => navigate("/activity")}
           >
             <span className="sidebar-icon">◷</span>
@@ -108,11 +98,9 @@ const Sidebar = () => {
             <span>Follow-ups</span>
           </button>
         </div>
-
       </div>
 
       <div className="sidebar-bottom">
-
         <div className="sidebar-admin">
           <div className="admin-avatar">A</div>
 
@@ -122,16 +110,11 @@ const Sidebar = () => {
           </div>
         </div>
 
-        <button
-          className="sidebar-logout"
-          onClick={handleLogout}
-        >
+        <button className="sidebar-logout" onClick={handleLogout}>
           <span className="sidebar-icon">↪</span>
           <span>Logout</span>
         </button>
-
       </div>
-
     </aside>
   );
 };

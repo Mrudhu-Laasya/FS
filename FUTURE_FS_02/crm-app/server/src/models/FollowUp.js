@@ -38,7 +38,7 @@ const followUpSchema = new mongoose.Schema(
       default: null,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-module.exports = mongoose.model("FollowUp", followUpSchema,"followUps");
+module.exports = mongoose.model("FollowUp", followUpSchema, "followUps");

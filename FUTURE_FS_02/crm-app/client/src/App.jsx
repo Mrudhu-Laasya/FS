@@ -11,67 +11,37 @@ import LeadDetails from "./pages/LeadDetails";
 import Activity from "./pages/Activity";
 import FollowUps from "./pages/FollowUps";
 
-const Placeholder = ({ title }) => {
-  return <h1 style={{ padding: "30px" }}>{title}</h1>;
-};
 function App() {
   return (
     <>
-     <BrowserRouter>
-      <Routes>
-<Route path="/contact" element={<ContactForm />} />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<ContactForm />} />
+          <Route path="/contact" element={<ContactForm />} />
 
-        <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login />} />
 
-        <Route
-          path="/dashboard"
-          element={<Dashboard />}
-        />
+          <Route path="/dashboard" element={<Dashboard />} />
 
-        <Route
-          path="/leads"
-          element={<LeadsPage />}
-        />
+          <Route path="/leads" element={<LeadsPage />} />
 
-      <Route
-  path="/leads/new"
-  element={<NewLeads />}
-/>
+          <Route path="/leads/new" element={<NewLeads />} />
 
-<Route
-  path="/leads/contacted"
-  element={<ContactedLeads />}
-/>
+          <Route path="/leads/contacted" element={<ContactedLeads />} />
 
-<Route
-  path="/leads/converted"
-  element={<ConvertedLeads />}
-/>
+          <Route path="/leads/converted" element={<ConvertedLeads />} />
 
-<Route
-  path="/leads/lost"
-  element={<LostLeads />}
-/>
+          <Route path="/leads/lost" element={<LostLeads />} />
 
-<Route
-  path="/leads/:id"
-  element={<LeadDetails />}
-/>
+          <Route path="/leads/:id" element={<LeadDetails />} />
 
-        <Route
-          path="/activity"
-          element={<Activity />}
-        />
+          <Route path="/activity" element={<Activity />} />
 
-        <Route
-          path="/follow-ups"
-          element={<FollowUps />}
-        />
-
-      </Routes>
-     </BrowserRouter>
+          <Route path="/follow-ups" element={<FollowUps />} />
+        </Routes>
+      </BrowserRouter>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

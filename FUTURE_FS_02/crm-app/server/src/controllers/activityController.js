@@ -1,4 +1,3 @@
-
 const Activity = require("../models/Activity");
 const Lead = require("../models/Lead");
 
@@ -97,7 +96,7 @@ const updateActivity = async (req, res) => {
     const activity = await Activity.findByIdAndUpdate(
       req.params.id,
       { $set: { description: description.trim() } },
-      { new: true, runValidators: true }
+      { new: true, runValidators: true },
     );
 
     if (!activity) {

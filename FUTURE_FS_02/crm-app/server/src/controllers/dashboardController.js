@@ -1,4 +1,3 @@
-
 const Lead = require("../models/Lead");
 const Activity = require("../models/Activity");
 const FollowUp = require("../models/FollowUp");
@@ -15,7 +14,7 @@ const getIndiaDate = (date = new Date()) => {
   }).formatToParts(date);
 
   const values = Object.fromEntries(
-    parts.map(({ type, value }) => [type, value])
+    parts.map(({ type, value }) => [type, value]),
   );
 
   return `${values.year}-${values.month}-${values.day}`;
@@ -57,7 +56,7 @@ const getDateRange = (period, startDate, endDate, today) => {
       startDate > endDate
     ) {
       throw new Error(
-        "Provide valid startDate and endDate in YYYY-MM-DD format. The start date must not be after the end date."
+        "Provide valid startDate and endDate in YYYY-MM-DD format. The start date must not be after the end date.",
       );
     }
 
@@ -68,9 +67,7 @@ const getDateRange = (period, startDate, endDate, today) => {
     endExclusive = addDays(today, 1);
   } else if (period === "week") {
     const [year, month, day] = today.split("-").map(Number);
-    const weekday = new Date(
-      Date.UTC(year, month - 1, day)
-    ).getUTCDay();
+    const weekday = new Date(Date.UTC(year, month - 1, day)).getUTCDay();
 
     // Monday is the first day of the week.
     start = addDays(today, weekday === 0 ? -6 : 1 - weekday);
@@ -103,11 +100,7 @@ const getDashboardSummary = async (req, res) => {
     const now = new Date();
     const today = getIndiaDate(now);
 
-    const {
-      period = "month",
-      startDate,
-      endDate,
-    } = req.query;
+    const { period = "month", startDate, endDate } = req.query;
 
     let range;
 
@@ -133,9 +126,7 @@ const getDashboardSummary = async (req, res) => {
 
     // Current-day reminder boundaries in India.
     const startOfToday = new Date(`${today}T00:00:00+05:30`);
-    const startOfTomorrow = new Date(
-      `${addDays(today, 1)}T00:00:00+05:30`
-    );
+    const startOfTomorrow = new Date(`${addDays(today, 1)}T00:00:00+05:30`);
 
     const [
       totalLeads,
@@ -259,15 +250,15 @@ const getDashboardSummary = async (req, res) => {
 
     // Combine daily database counts into chart-ready records.
     const leadsByDate = Object.fromEntries(
-      leadTrend.map((item) => [item._id, item.count])
+      leadTrend.map((item) => [item._id, item.count]),
     );
 
     const activitiesByDate = Object.fromEntries(
-      activityTrend.map((item) => [item._id, item.count])
+      activityTrend.map((item) => [item._id, item.count]),
     );
 
     const completedByDate = Object.fromEntries(
-      completedFollowUpTrend.map((item) => [item._id, item.count])
+      completedFollowUpTrend.map((item) => [item._id, item.count]),
     );
 
     const chartData = [];

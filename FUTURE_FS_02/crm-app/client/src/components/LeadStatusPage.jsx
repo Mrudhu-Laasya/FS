@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import DashboardHeader from "./DashboardHeader";
 import Sidebar from "./Sidebar";
 import "../index.css";
 import { getLeads } from "../services/api";
-
-const API_URL = import.meta.env.VITE_API_URL;
 
 const LeadStatusPage = ({ title, description, endpoint }) => {
   const navigate = useNavigate();
@@ -14,22 +12,25 @@ const LeadStatusPage = ({ title, description, endpoint }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const fetchLeads = async () => {
+  const fetchLeads = useCallback(async () => {
     try {
       setLoading(true);
-      setError("");  
-const data= await getLeads(endpoint)
+      setError("");
+      const data = await getLeads(endpoint);
       setLeads(data);
     } catch (error) {
       setError(error.message);
     } finally {
       setLoading(false);
     }
-  };
+  }, [endpoint]);
 
   useEffect(() => {
-    fetchLeads();
-  }, [endpoint]);
+    const fetchData = async () => {
+      await fetchLeads();
+    };
+    fetchData();
+  }, [fetchLeads]);
 
   return (
     <div className="dashboard">
@@ -51,16 +52,10 @@ const data= await getLeads(endpoint)
           </div>
 
           <div className="leads-card">
-            {loading && (
-              <div className="leads-message">
-                Loading leads...
-              </div>
-            )}
+            {loading && <div className="leads-message">Loading leads...</div>}
 
             {error && !loading && (
-              <div className="leads-message error">
-                {error}
-              </div>
+              <div className="leads-message error">{error}</div>
             )}
 
             {!loading && !error && leads.length === 0 && (
@@ -85,9 +80,7 @@ const data= await getLeads(endpoint)
                   {leads.map((lead) => (
                     <tr
                       key={lead._id}
-                      onClick={() =>
-                        navigate(`/leads/${lead._id}`)
-                      }
+                      onClick={() => navigate(`/leads/${lead._id}`)}
                     >
                       <td>
                         <div className="lead-info">
@@ -96,23 +89,13 @@ const data= await getLeads(endpoint)
                         </div>
                       </td>
 
-                      <td>
-                        {lead.company || "—"}
-                      </td>
+                      <td>{lead.company || "—"}</td>
 
-                      <td>
-                        {lead.service}
-                      </td>
+                      <td>{lead.service}</td>
 
-                      <td>
-                        {lead.email}
-                      </td>
+                      <td>{lead.email}</td>
 
-                      <td>
-                        {new Date(
-                          lead.createdAt
-                        ).toLocaleDateString()}
-                      </td>
+                      <td>{new Date(lead.createdAt).toLocaleDateString()}</td>
                     </tr>
                   ))}
                 </tbody>

@@ -1,4 +1,3 @@
-
 const Admin = require("../models/Admin");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -14,7 +13,9 @@ const loginAdmin = async (req, res) => {
       });
     }
 
-    const admin = await Admin.findOne({ email: email.toLowerCase() }).select("+passwordHash");
+    const admin = await Admin.findOne({ email: email.toLowerCase() }).select(
+      "+passwordHash",
+    );
 
     if (!admin) {
       return res.status(401).json({ message: "Invalid credentials" });
@@ -153,7 +154,7 @@ const updateAdmin = async (req, res) => {
     const admin = await Admin.findByIdAndUpdate(
       req.params.id,
       { $set: updates },
-      { new: true, runValidators: true }
+      { new: true, runValidators: true },
     );
 
     if (!admin) {
@@ -194,7 +195,6 @@ const deleteAdmin = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
 
 module.exports = {
   createAdmin,
