@@ -11,7 +11,7 @@ export function ProjectItem({
   title,
   techStack,
   summary,
-  link,
+  url,
   onRefresh,
 }) {
   const { isEditValid } = useEdit();
@@ -20,7 +20,7 @@ export function ProjectItem({
     title,
     techStack,
     summary,
-    link,
+    url,
   };
   const handleEdit = () => {
     setIsEditing(true);
@@ -77,7 +77,7 @@ export function ProjectItem({
         <span className="project-title">{title}</span>
         <a
           className="project-link"
-          href={link}
+          href={url}
           target="_blank"
           rel="noopener noreferrer"
         >

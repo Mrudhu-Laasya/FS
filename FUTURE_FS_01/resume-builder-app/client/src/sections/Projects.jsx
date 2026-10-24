@@ -53,7 +53,7 @@ export default function Projects() {
             title={project.title}
             techStack={project.techStack}
             summary={project.summary}
-            link={project.link}
+            url={project.url}
             onRefresh={fetchProjects}
           />
         ))}
