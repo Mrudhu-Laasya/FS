@@ -5,7 +5,7 @@ export default function ProjectsForm({ initialData, onUpdate, onCancel }) {
     title: initialData.title || "",
     techStack: initialData.techStack || [],
     summary: initialData.summary || "",
-    link: initialData.link || "",
+    url: initialData.url || "",
   });
 
   const [techStackInput, setTechStackInput] = useState(
