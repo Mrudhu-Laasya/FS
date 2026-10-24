@@ -80,8 +80,8 @@ export default function ProjectsForm({ initialData, onUpdate, onCancel }) {
 
           <input
             type="url"
-            name="link"
-            value={formData.link}
+            name="url"
+            value={formData.url}
             onChange={handleChange}
             placeholder="https://github.com"
           />
