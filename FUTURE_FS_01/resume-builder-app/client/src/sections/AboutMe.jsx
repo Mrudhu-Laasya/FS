@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { getAboutMe, updateAboutMe } from "../api/aboutMeApi";
 import EditButton from "../components/EditButton";
 import "../index.css";
@@ -9,17 +9,17 @@ export default function AboutMe() {
   const { isEditValid } = useEdit();
   const [isEditing, setIsEditing] = useState(false);
   const [aboutMe, setAboutMe] = useState({});
-  useEffect(() => {
-    const fetchAboutMe = async () => {
+  const fetchAboutMe = useCallback(async () => {
       try {
         const aboutMeRes = await getAboutMe();
         setAboutMe(aboutMeRes);
       } catch (error) {
         console.error(error);
       }
-    };
-    fetchAboutMe();
-  }, []);
+    }, []);
+  useEffect(async () => {
+   await fetchAboutMe();
+  }, [fetchAboutMe]);
   const handleUpdate = (updatedData) => {
     updateAboutMe(aboutMe._id, updatedData.description);
     setIsEditing(false);
