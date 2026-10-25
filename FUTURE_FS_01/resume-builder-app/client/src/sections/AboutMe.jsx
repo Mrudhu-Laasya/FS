@@ -9,17 +9,23 @@ export default function AboutMe() {
   const { isEditValid } = useEdit();
   const [isEditing, setIsEditing] = useState(false);
   const [aboutMe, setAboutMe] = useState({});
+  
   const fetchAboutMe = useCallback(async () => {
-      try {
-        const aboutMeRes = await getAboutMe();
-        setAboutMe(aboutMeRes);
-      } catch (error) {
-        console.error(error);
-      }
-    }, []);
-  useEffect(async () => {
-   await fetchAboutMe();
+    try {
+      const aboutMeRes = await getAboutMe();
+      setAboutMe(aboutMeRes);
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await fetchAboutMe();
+    };
+    fetchData();
   }, [fetchAboutMe]);
+
   const handleUpdate = (updatedData) => {
     updateAboutMe(aboutMe._id, updatedData.description);
     setIsEditing(false);
