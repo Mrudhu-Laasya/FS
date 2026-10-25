@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getAboutMe } from "../api/aboutMeApi";
+import { getAboutMe, updateAboutMe } from "../api/aboutMeApi";
 import EditButton from "../components/EditButton";
 import "../index.css";
 import AboutMeForm from "../forms/AboutMeForm";
@@ -21,10 +21,7 @@ export default function AboutMe() {
     fetchAboutMe();
   }, []);
   const handleUpdate = (updatedData) => {
-    console.log("Updated data:", updatedData);
-
-    // PATCH API here
-
+    updateAboutMe(aboutMe._id, updatedData.description);
     setIsEditing(false);
   };
 
