@@ -1,5 +1,5 @@
 import { useState } from "react";
-export default function AboutMeForm({ initialData, onUpdate, onCancel }) {
+export default function AboutMeForm({ initialData, onUpdate, onCancel, onRefresh }) {
   const [formData, setFormData] = useState({
     description: initialData.description,
   });
@@ -14,6 +14,7 @@ export default function AboutMeForm({ initialData, onUpdate, onCancel }) {
   };
   const handleSubmit = () => {
     onUpdate(formData);
+    onRefresh();
   };
   return (
     <>

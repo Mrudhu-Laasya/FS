@@ -45,6 +45,7 @@ export default function AboutMe() {
             initialData={aboutMe}
             onUpdate={handleUpdate}
             onCancel={() => setIsEditing(false)}
+            onRefresh={fetchAboutMe}
           />
         ) : (
           <p className="about-me-text">{aboutMe.description}</p>
