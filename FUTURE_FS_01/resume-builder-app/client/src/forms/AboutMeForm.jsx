@@ -20,7 +20,7 @@ export default function AboutMeForm({ initialData, onUpdate, onCancel }) {
       <div className="about-me-edit">
         <div className="form-field">
           <textarea
-            value={initialData.description}
+            value={formData.description}
             name="description"
             onChange={handleChange}
             placeholder="Enter About Me"
